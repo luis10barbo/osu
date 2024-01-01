@@ -86,7 +86,7 @@ namespace osu.Game.Screens.Play
         private bool isRestarting;
 
         private Bindable<bool> mouseWheelDisabled;
-
+        private Bindable<bool> expandedGameplayLeaderboard;
         private readonly Bindable<bool> storyboardReplacesBackground = new Bindable<bool>();
 
         public IBindable<bool> LocalUserPlaying => localUserPlaying;
@@ -214,6 +214,7 @@ namespace osu.Game.Screens.Play
                 return;
 
             mouseWheelDisabled = config.GetBindable<bool>(OsuSetting.MouseDisableWheel);
+            expandedGameplayLeaderboard = config.GetBindable<bool>(OsuSetting.ExpandedGameplayLeaderboard);
 
             if (game != null)
                 gameActive.BindTo(game.IsActive);
@@ -898,7 +899,7 @@ namespace osu.Game.Screens.Play
         protected virtual void AddLeaderboardToHUD(GameplayLeaderboard leaderboard) => HUDOverlay.LeaderboardFlow.Add(leaderboard);
 
         private void updateLeaderboardExpandedState() =>
-            LeaderboardExpandedState.Value = !LocalUserPlaying.Value || HUDOverlay.HoldingForHUD.Value;
+            LeaderboardExpandedState.Value = !LocalUserPlaying.Value || HUDOverlay.HoldingForHUD.Value || expandedGameplayLeaderboard.Value;
 
         #endregion
 
